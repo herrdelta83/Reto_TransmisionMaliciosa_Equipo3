@@ -45,8 +45,7 @@ The program processes 5 input files (`transmission1.txt`, `transmission2.txt`, `
 ### 1. Clone this repo
 Open your terminal and execute this command:
 ```
-git clone [https://github.com/TU_USUARIO/TU_REPOSITORIO.git](https://github.com/TU_USUARIO/TU_REPOSITORIO.git)
-cd TU_REPOSITORIO 
+git clone https://github.com/herrdelta83/Reto_TransmisionMaliciosa_Equipo3.git
 ```
 
 ### 2. Create your branch
