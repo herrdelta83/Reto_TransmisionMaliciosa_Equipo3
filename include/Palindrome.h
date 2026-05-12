@@ -8,4 +8,6 @@ using namespace std;
 //return a pair of {initialPosition, FInalPosition} (base 1)
 pair<int, int> findLongestPalindrome(const string& transmission);
 
+
+
 #endif
