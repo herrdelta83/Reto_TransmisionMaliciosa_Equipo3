@@ -1,4 +1,5 @@
 ## 🛠️ Project Structure
+```
 E1.cpp/
 │
 ├── data/                   <-- Input Files
@@ -21,6 +22,7 @@ E1.cpp/
 │
 ├── .gitignore
 └── README.md
+```
 
 # Malicious Stream Analyzer (C++)
 
