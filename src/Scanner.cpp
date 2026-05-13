@@ -1,7 +1,4 @@
 #include "../include/Scanner.h"
-#include <iostream>
-#include <string>
-using namespace std;
 
 // Buscar si un patrón esta dentro del texto
 // Complejidad: O(n*m), donde n es la longitud del texto y m la longitud del patrón
