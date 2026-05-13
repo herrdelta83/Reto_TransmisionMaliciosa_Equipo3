@@ -4,55 +4,51 @@
 #include <vector>
 using namespace std;
 
-const vector<string> files[] = {"transmission1.txt", "transmission2.txt", "mcode1.txt", "mcode2.txt", "mcode3.txt"};
+const vector<string> files = {"transmission1.txt", "transmission2.txt", "mcode1.txt", "mcode2.txt", "mcode3.txt"};
 //Use a function to read data and save it as a vector of strings
 
-string caso(const string& user){ //recieve user input
-    string path;
+string getPath(const int& user){ //recieve user input
     switch(user){
-        case  1:
-            path = "data/caso1";
+        case 1:
             cout << "caso 1" << endl;
+            return "C:\\Users\\52812\\Documents\\Work\\Personal\\Workplace\\DSA\\E1.cpp\\data\\caso1\\";
         case 2:
-            path = "data/caso2";
             cout << "caso 2" << endl;
+            return "C:\\Users\\52812\\Documents\\Work\\Personal\\Workplace\\DSA\\E1.cpp\\data\\caso2\\";
         case 3:
-            path = "data/caso3";
             cout << "caso 3" << endl;
+            return "C:\\Users\\52812\\Documents\\Work\\Personal\\Workplace\\DSA\\E1.cpp\\data\\caso3\\";
         case 4:
-            pah = "data/caso4";
             cout << "caso 4" << endl;
+            return "C:\\Users\\52812\\Documents\\Work\\Personal\\Workplace\\DSA\\E1.cpp\\data\\caso4\\";
+        default:
+            return "no selected or wrong path chosen";
     }
-    return path; //return the selected path
 };
 
 int main(){
 
-    string user;
+    int user;
     cout << "select the case: (1/2/3/4)" << "\n" << endl;
     cin >> user;
-    caso(user);
+    string dir = getPath(user);
 
-    //create a new vector for the path
-    vector<string> path[] = {};
-    for (int i = 0; i < files.length(); i++){
-        path.push_back(user + path[i]);//concatenate new path
-    }
+    for (const string& filename : files){
+        //Concatenate selected path to case
+        string fullpath = dir + filename;
 
-    for (const string& filename : path){
-        
-        ifstream filename; //initialized variable
+        ifstream fileStream(fullpath); //initialized variable
         
         //check file open
-        if(!filename.is_open()){
-            cout << "The file didn't open" << filename << endl;
+        if(!fileStream.is_open()){
+            cout << "The file " << filename << " didn't open" << endl;
             continue;
         }
 
         string content;
         
         //read file
-        while(path >> content){
+        while(fileStream >> content){
             cout << content << " " << endl;
         }
 
