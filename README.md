@@ -45,6 +45,13 @@ The program processes 5 input files (`transmission1.txt`, `transmission2.txt`, `
 
 3. **Similarity Analysis:** Finds the longest common substring between the two main transmissions.
 
+## 🔍 Notes
+
+The main.cpp must read the data/casoX files with the full path, so you need to change the path once you clone this repo at your saved directory, all changes in getPath()
+```
+"C:\\Your\\Path\\Goes\\Here\\data\\caso1\\"
+```
+
 ### 1. Clone this repo
 Open your terminal and execute this command:
 ```
