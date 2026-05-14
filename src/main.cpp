@@ -1,7 +1,10 @@
 #include <iostream>
+#include <cstddef> //for size_t
 #include <fstream> //open files
 #include <string>
 #include <vector>
+
+#include "C:/Users/52812/Documents/Work/Personal/Workplace/DSA/E1.cpp/include/Palindrome.h"
 using namespace std;
 
 const vector<string> files = {"transmission1.txt", "transmission2.txt", "mcode1.txt", "mcode2.txt", "mcode3.txt"};
@@ -33,6 +36,9 @@ int main(){
     cin >> user;
     string dir = getPath(user);
 
+    //Palindrome Class
+    LPS Len_Matrix;
+
     for (const string& filename : files){
         //Concatenate selected path to case
         string fullpath = dir + filename;
@@ -49,6 +55,11 @@ int main(){
         
         //read file
         while(fileStream >> content){
+            //test LPS Length
+            if(filename == "transmission1.txt"){
+                cout << "\n" << "The lenght of the matrix is: " << Len_Matrix.Length(content) << "\n" << endl;
+            }
+
             cout << content << " " << endl;
         }
 
