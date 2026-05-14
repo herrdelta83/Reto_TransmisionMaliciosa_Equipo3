@@ -57,8 +57,13 @@ int main(){
         while(fileStream >> content){
             //test LPS Length
             if(filename == "transmission1.txt"){
-                cout << "\n" << "The lenght of the matrix is: " << Len_Matrix.Length(content) << "\n" << endl;
+                size_t currLen = Len_Matrix.Length(content);
+                cout << "\n" << "The lenght of the matrix is: " << currLen << "\n" << endl;
+                
+                //display matrix and passing the member function pointer
+                Len_Matrix.matrix(currLen);
             }
+
 
             cout << content << " " << endl;
         }
