@@ -11,7 +11,7 @@
 class LPS {
     public:
         std::size_t Length(std::string S); //declared length func
-        void matrix(std::size_t size); //declared matrix func and uses Length as function parameter with a pointer and its argument (string)
+        void LIS(std::size_t size, std::string Str); //declared LIS func to search through k > 1 in dp
 };
 
 

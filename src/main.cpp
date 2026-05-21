@@ -30,6 +30,10 @@ string getPath(const int& user){ //recieve user input
 };
 
 int main(){
+    //test variables
+    //std::string S = "BBABCBCAB";
+    //std::size_t s = S.size();
+    //test variables
 
     int user;
     cout << "select the case: (1/2/3/4)" << "\n" << endl;
@@ -38,11 +42,14 @@ int main(){
 
     //Palindrome Class
     LPS Len_Matrix;
-
+    
+    //test BBABCBCAB and L
+    //Len_Matrix.LIS(s, S);
+    
     for (const string& filename : files){
         //Concatenate selected path to case
         string fullpath = dir + filename;
-
+        
         ifstream fileStream(fullpath); //initialized variable
         
         //check file open
@@ -50,25 +57,22 @@ int main(){
             cout << "The file " << filename << " didn't open" << endl;
             continue;
         }
-
+        
         string content;
+        size_t size;
         
         //read file
         while(fileStream >> content){
-            //test LPS Length
-            if(filename == "transmission1.txt"){
-                size_t currLen = Len_Matrix.Length(content);
-                cout << "\n" << "The lenght of the matrix is: " << currLen << "\n" << endl;
-                
-                //display matrix and passing the member function pointer
-                Len_Matrix.matrix(currLen);
-            }
-
+            
+            size = Len_Matrix.Length(content); //size of the matrix for dp[][]
+            cout << "the dp[][] size: " << size << " x " << size << endl;
+            Len_Matrix.LIS(size, content);
 
             cout << content << " " << endl;
         }
-
+        
         cout << "\n" << "------- end of file: " << filename << "------\n" << endl;
+        
     }
 
     return 0;
