@@ -1,78 +1,100 @@
+#include <fstream>
 #include <iostream>
-#include <cstddef> //for size_t
-#include <fstream> //open files
+#include <sstream>
 #include <string>
 #include <vector>
 
-#include "C:/Users/52812/Documents/Work/Personal/Workplace/DSA/E1.cpp/include/Palindrome.h"
-using namespace std;
+#include "../include/Palindrome.h"
+#include "../include/Similarity.h"
 
-const vector<string> files = {"transmission1.txt", "transmission2.txt", "mcode1.txt", "mcode2.txt", "mcode3.txt"};
-//Use a function to read data and save it as a vector of strings
+const std::vector<std::string> files = {"transmission1.txt", "transmission2.txt", "mcode1.txt", "mcode2.txt", "mcode3.txt"};
 
-string getPath(const int& user){ //recieve user input
-    switch(user){
+std::string getPath(int user) {
+    switch (user) {
         case 1:
-            cout << "caso 1" << endl;
-            return "C:\\Users\\52812\\Documents\\Work\\Personal\\Workplace\\DSA\\E1.cpp\\data\\caso1\\";
+            return "data/caso1/";
         case 2:
-            cout << "caso 2" << endl;
-            return "C:\\Users\\52812\\Documents\\Work\\Personal\\Workplace\\DSA\\E1.cpp\\data\\caso2\\";
+            return "data/caso2/";
         case 3:
-            cout << "caso 3" << endl;
-            return "C:\\Users\\52812\\Documents\\Work\\Personal\\Workplace\\DSA\\E1.cpp\\data\\caso3\\";
+            return "data/caso3/";
         case 4:
-            cout << "caso 4" << endl;
-            return "C:\\Users\\52812\\Documents\\Work\\Personal\\Workplace\\DSA\\E1.cpp\\data\\caso4\\";
+            return "data/caso4/";
         default:
-            return "no selected or wrong path chosen";
+            return "";
     }
-};
+}
 
-int main(){
-    //test variables
-    //std::string S = "BBABCBCAB";
-    //std::size_t s = S.size();
-    //test variables
+std::string normalizeContent(const std::string& raw) {
+    std::string result;
+    result.reserve(raw.size());
+    for (char ch : raw) {
+        if (ch != '\r' && ch != '\n') {
+            result.push_back(ch);
+        }
+    }
+    return result;
+}
 
+int main() {
     int user;
-    cout << "select the case: (1/2/3/4)" << "\n" << endl;
-    cin >> user;
-    string dir = getPath(user);
+    std::cout << "Select the case: (1/2/3/4)" << std::endl;
+    std::cin >> user;
 
-    //Palindrome Class
-    LPS Len_Matrix;
-    
-    //test BBABCBCAB and L
-    //Len_Matrix.LIS(s, S);
-    
-    for (const string& filename : files){
-        //Concatenate selected path to case
-        string fullpath = dir + filename;
-        
-        ifstream fileStream(fullpath); //initialized variable
-        
-        //check file open
-        if(!fileStream.is_open()){
-            cout << "The file " << filename << " didn't open" << endl;
+    std::string dir = getPath(user);
+    if (dir.empty()) {
+        std::cerr << "Invalid case selected." << std::endl;
+        return 1;
+    }
+
+    LPS lenMatrix;
+    std::string transmission1;
+    std::string transmission2;
+
+    for (const std::string& filename : files) {
+        std::string fullpath = dir + filename;
+        std::ifstream fileStream(fullpath);
+
+        if (!fileStream.is_open()) {
+            std::cerr << "The file " << fullpath << " didn't open" << std::endl;
             continue;
         }
-        
-        string content;
-        size_t size;
-        
-        //read file
-        while(fileStream >> content){
-            
-            size = Len_Matrix.Length(content); //size of the matrix for dp[][]
-            cout << "the dp[][] size: " << size << " x " << size << endl;
-            Len_Matrix.LIS(size, content);
 
-            cout << content << " " << endl;
+        std::ostringstream buffer;
+        buffer << fileStream.rdbuf();
+        std::string content = normalizeContent(buffer.str());
+
+        if (content.empty()) {
+            std::cout << "File " << filename << " is empty or contains only newlines." << std::endl;
+            continue;
         }
-        
-        cout << "\n" << "------- end of file: " << filename << "------\n" << endl;
-        
+
+        std::size_t size = lenMatrix.Length(content);
+        std::cout << "Processing file: " << filename << std::endl;
+        std::cout << "Content size: " << size << std::endl;
+        lenMatrix.LIS(size, content);
+
+        if (filename == "transmission1.txt") {
+            transmission1 = content;
+        } else if (filename == "transmission2.txt") {
+            transmission2 = content;
+        }
+
+        std::cout << "------- end of file: " << filename << " ------" << std::endl;
+        std::cout << std::endl;
+    }
+
+    if (!transmission1.empty() && !transmission2.empty()) {
+        auto result = longestCommonSubstring(transmission1, transmission2);
+        if (result.second > 0) {
+            std::cout << "Longest common substring between transmission1 and transmission2:" << std::endl;
+            std::cout << "Start position in transmission1: " << result.first << std::endl;
+            std::cout << "Substring length: " << result.second << std::endl;
+            std::cout << "Substring: '" << transmission1.substr(result.first - 1, result.second) << "'" << std::endl;
+        } else {
+            std::cout << "No common substring found between transmission1 and transmission2." << std::endl;
+        }
+    } else {
+        std::cout << "Unable to compare transmissions because one or both files were not read." << std::endl;
     }
 
     return 0;

@@ -1,12 +1,11 @@
 #ifndef SIMILARITY_H
 #define SIMILARITY_H
+
 #include <string>
 #include <utility>
-#include <iostream>
-using namespace std;
 
-
-//Return initial position, and the longest commun substring from the first string
-pair<int, int> longestCommonSubstring(const string& t1, const string& t2);
+// Return 1-based start position and length of the longest common substring
+// between t1 and t2. If there is no common substring, returns {-1, 0}.
+std::pair<int, int> longestCommonSubstring(const std::string& t1, const std::string& t2);
 
 #endif
