@@ -67,3 +67,6 @@ git checkout -b feature/name-of-your-task
 ```
 g++ -std=c++11 src/main.cpp src/Palindrome.cpp src/Scanner.cpp src/Similarity.cpp -Iinclude -o main
 ```
+### 4. Reflexion
+
+https://docs.google.com/document/d/1seBzO25ZslXQo9quTk9gkpsLmyVxOCYWq14zK0pHQH8/edit?usp=sharing 
