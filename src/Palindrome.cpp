@@ -1,7 +1,8 @@
 #include <iostream>
 #include <cstddef>
 #include <algorithm> //use max() function
-#include "C:/Users/52812/Documents/Work/Personal/Workplace/DSA/E1.cpp/include/Palindrome.h"
+#include <vector>
+#include "../include/Palindrome.h"
 
 //function to return the length
 std::size_t LPS::Length(std::string S){ std::size_t len = S.size(); return len;}
@@ -10,7 +11,7 @@ std::size_t LPS::Length(std::string S){ std::size_t len = S.size(); return len;}
 //LPS Algorithm
 void LPS::LIS(std::size_t size, std::string Str){
     //LPS
-    int dp[size][size] = {};//empty static matrix of size Len x Len
+    std::vector<std::vector<int>> dp(size, std::vector<int>(size, 0)); // matrix Len x Len
     int j = 0;
     int l1 = 0; //compare if L > 1 | L = 1
     int n, m, lis, inner;//temp var for LIS
