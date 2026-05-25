@@ -1,6 +1,6 @@
 /*
  * Longest Common Substring search using dynamic programming.
- * Autores: [Nombre Apellido] - [Matricula]
+ * Autores: Angel Sánchez A00837790
  * Fecha: 2026-05-24
  */
 #ifndef SIMILARITY_H

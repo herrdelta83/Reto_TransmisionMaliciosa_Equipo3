@@ -1,6 +1,6 @@
 /*
  * Pattern matching scanner using brute-force substring search.
- * Autores: [Nombre Apellido] - [Matricula]
+ * Autores: Silvanna Farias A01178494
  * Fecha: 2026-05-24
  */
 #ifndef SCANNER_H

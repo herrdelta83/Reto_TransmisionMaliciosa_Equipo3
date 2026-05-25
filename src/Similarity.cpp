@@ -1,6 +1,6 @@
 /*
  * Implementation of Longest Common Substring using DP.
- * Autores: [Nombre Apellido] - [Matricula]
+ * Autores: Angel Sánchez A00837790
  * Fecha: 2026-05-24
  */
 #include <vector>

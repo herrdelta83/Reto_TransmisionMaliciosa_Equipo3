@@ -1,6 +1,6 @@
 /*
  * Implementation of LPS (Longest Palindromic Subsequence) using DP.
- * Autores: [Nombre Apellido] - [Matricula]
+ * Autores: Leonel Bailón A01286177
  * Fecha: 2026-05-24
  */
 #include <iostream>

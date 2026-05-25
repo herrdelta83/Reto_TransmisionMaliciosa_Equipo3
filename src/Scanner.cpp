@@ -1,6 +1,6 @@
 /*
  * Brute-force pattern search: checks each position in texto for patron.
- * Autores: [Nombre Apellido] - [Matricula]
+ * Autores: Silvanna Farias A01178494
  * Fecha: 2026-05-24
  */
 #include "../include/Scanner.h"
