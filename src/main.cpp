@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "../include/Palindrome.h"
+#include "../include/Scanner.h"
 #include "../include/Similarity.h"
 
 const std::vector<std::string> files = {"transmission1.txt", "transmission2.txt", "mcode1.txt", "mcode2.txt", "mcode3.txt"};
@@ -44,6 +45,9 @@ int main() {
     LPS Len_Matrix;
     std::string transmission1;
     std::string transmission2;
+    std::string mcode1;
+    std::string mcode2;
+    std::string mcode3;
 
     for (const std::string& filename : files) {
         std::string fullpath = dir + filename;
@@ -72,11 +76,41 @@ int main() {
             transmission1 = content;
         } else if (filename == "transmission2.txt") {
             transmission2 = content;
+        } else if (filename == "mcode1.txt") {
+            mcode1 = content;
+        } else if (filename == "mcode2.txt") {
+            mcode2 = content;
+        } else if (filename == "mcode3.txt") {
+            mcode3 = content;
         }
 
         std::cout << "------- end of file: " << filename << " ------" << std::endl;
         std::cout << std::endl;
     }
+
+    std::vector<std::pair<std::string, std::string>> scanTargets = {
+        {"transmission1", transmission1},
+        {"transmission2", transmission2}
+    };
+    std::vector<std::pair<std::string, std::string>> mcodes = {
+        {"mcode1", mcode1},
+        {"mcode2", mcode2},
+        {"mcode3", mcode3}
+    };
+
+    std::cout << "===== Scanner Results =====" << std::endl;
+    for (const auto& [tname, ttext] : scanTargets) {
+        for (const auto& [mname, mpattern] : mcodes) {
+            if (ttext.empty() || mpattern.empty()) continue;
+            auto [found, pos] = scanner(ttext, mpattern);
+            if (found) {
+                std::cout << mname << " found in " << tname << " at position " << pos << std::endl;
+            } else {
+                std::cout << mname << " not found in " << tname << std::endl;
+            }
+        }
+    }
+    std::cout << std::endl;
 
     if (!transmission1.empty() && !transmission2.empty()) {
         auto result = longestCommonSubstring(transmission1, transmission2);
