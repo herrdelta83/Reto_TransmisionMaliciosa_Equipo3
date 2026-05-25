@@ -1,14 +1,17 @@
+/*
+ * Longest Palindromic Subsequence (LPS) using dynamic programming.
+ * Autores: [Nombre Apellido] - [Matricula]
+ * Fecha: 2026-05-24
+ */
 #ifndef PALINDROME_H
 #define PALINDROME_H
-#include <cstddef> //used for size_t
+#include <cstddef>
 #include <string>
-#include <utility>
-#include <iostream>
 
 class LPS {
     public:
-        std::size_t Length(std::string S); //declared length func
-        void LIS(std::size_t size, std::string Str); //declared LIS func to search through k > 1 in dp
+        std::size_t length(std::string s);
+        void findLps(std::size_t size, std::string str);
 };
 
 #endif

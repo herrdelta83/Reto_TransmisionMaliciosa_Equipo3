@@ -1,22 +1,28 @@
+/*
+ * Brute-force pattern search: checks each position in texto for patron.
+ * Autores: [Nombre Apellido] - [Matricula]
+ * Fecha: 2026-05-24
+ */
 #include "../include/Scanner.h"
 
-// Buscar si un patrón esta dentro del texto
-// Complejidad: O(n*m), donde n es la longitud del texto y m la longitud del patrón
-pair<bool,int> scanner(string texto, string patron) {
-    for (int i = 0; i < texto.length(); i++) {
-        bool encontrado = true; // se asume que el patrón se encuentra hasta que se demuestre lo contrario
+// Searches for patron inside texto using brute-force O(n*m).
+// Param texto: the string to search in.
+// Param patron: the pattern to search for.
+// Returns: {true, 1-based position} if found, {false, -1} otherwise.
+std::pair<bool, int> scanner(std::string texto, std::string patron) {
+    for (int i = 0; i < (int)texto.length(); i++) {
+        bool encontrado = true;
 
-        for (int j = 0; j < patron.length(); j++) { // compara el patrón con el texto a partir de la posición i
-            if (i + j >= texto.length() || texto[i + j] != patron[j]) { // si se sale del texto o los caracteres no coinciden, el patrón no se encuentra
+        for (int j = 0; j < (int)patron.length() && encontrado; j++) {
+            if (i + j >= (int)texto.length() || texto[i + j] != patron[j]) {
                 encontrado = false;
-                break;
             }
         }
 
         if (encontrado) {
-            return {true, i + 1}; // si hay patrón devuelve true y la posicion en donde se encuentra el patrón en el texto
+            return {true, i + 1};
         }
     }
 
-    return {false, -1}; // si el patrón no se encuentra, devuelve false y -1
+    return {false, -1};
 }

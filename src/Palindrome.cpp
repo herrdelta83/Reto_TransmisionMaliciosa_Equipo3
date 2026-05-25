@@ -1,101 +1,87 @@
+/*
+ * Implementation of LPS (Longest Palindromic Subsequence) using DP.
+ * Autores: [Nombre Apellido] - [Matricula]
+ * Fecha: 2026-05-24
+ */
 #include <iostream>
-#include <cstddef>
-#include <algorithm> //use max() function
+#include <algorithm>
 #include <vector>
 #include "../include/Palindrome.h"
 
-//function to return the length
-std::size_t LPS::Length(std::string S){ std::size_t len = S.size(); return len;}
+// Returns the number of characters in string s.
+// Param s: input string.
+// Returns: character count as std::size_t.
+std::size_t LPS::length(std::string s) {
+    return s.size();
+}
 
+// Computes and prints the Longest Palindromic Subsequence of str using DP.
+// Param size: number of characters in str.
+// Param str: input string to analyze.
+// Returns: void (prints LPS length and the subsequence string).
+void LPS::findLps(std::size_t size, std::string str) {
+    std::vector<std::vector<int>> dp(size, std::vector<int>(size, 0));
+    int leftNeighbor = 0;
+    int downNeighbor = 0;
+    int innerNeighbor = 0;
+    int maxNeighbor = 0;
 
-//LPS Algorithm
-void LPS::LIS(std::size_t size, std::string Str){
-    //LPS
-    std::vector<std::vector<int>> dp(size, std::vector<int>(size, 0)); // matrix Len x Len
-    int j = 0;
-    int l1 = 0; //compare if L > 1 | L = 1
-    int n, m, lis, inner;//temp var for LIS
-    
-    for(int k = 0; k <= size; k++){ //iterating in k for each diaginal k > 1
-        for(int i = 0; i < size - k; i++){
-            j = i + k;
-            if(k == 0){
+    for (int k = 0; k <= (int)size; k++) {
+        for (int i = 0; i < (int)size - k; i++) {
+            int j = i + k;
+            if (k == 0) {
                 dp[i][j] = 1;
-            }
-            else if(k == 1){ //k = 1
-                if(Str[i] == Str[j]){
-                    dp[i][j] = 2;
-                }
-                else{
-                    dp[i][j] = 1;
-                }
-            }
-            else if (k > 1){
-                if(Str[i] == Str[j]){
-                    l1 = 2;
-                    n = dp[i][j - 1];
-                    m = dp[i + 1][j];
-                    inner = dp[i + 1][j - 1];
-                    lis = std::max(n, m);
-                    
-                    if(lis > inner){ //we avoid double checking n and m
-                        dp[i][j] = l1 + inner;
-                    }
-                    else{
-                        dp[i][j] = l1 + lis;
-                    }
-                }
-                else{
-                    l1 = 1;
-                    n = dp[i][j - 1];
-                    m = dp[i + 1][j];
-                    lis = std::max(n, m);
-                    dp[i][j] = lis;
+            } else if (k == 1) {
+                dp[i][j] = (str[i] == str[j]) ? 2 : 1;
+            } else {
+                if (str[i] == str[j]) {
+                    leftNeighbor = dp[i][j - 1];
+                    downNeighbor = dp[i + 1][j];
+                    innerNeighbor = dp[i + 1][j - 1];
+                    maxNeighbor = std::max(leftNeighbor, downNeighbor);
 
+                    if (maxNeighbor > innerNeighbor) {
+                        dp[i][j] = 2 + innerNeighbor;
+                    } else {
+                        dp[i][j] = 2 + maxNeighbor;
+                    }
+                } else {
+                    leftNeighbor = dp[i][j - 1];
+                    downNeighbor = dp[i + 1][j];
+                    dp[i][j] = std::max(leftNeighbor, downNeighbor);
                 }
             }
         }
     }
-    std::cout << "LPS: " << "(" << dp[0][size - 1] << ")" << '\n' << std::endl;
-    //Backtracking the DP in look for LPS String
-    int lps_len = dp[0][size - 1];
 
-    //create an empty string of LPS length, filled with spaces
-    std::string lps_str(lps_len, ' ');
+    std::cout << "LPS: (" << dp[0][size - 1] << ")" << '\n' << std::endl;
 
-    //Matrix Trackers
-    int I = 0; int J = size - 1;
+    int lpsLen = dp[0][size - 1];
+    std::string lpsStr(lpsLen, ' ');
 
-    //string placement trackers
-    int left_idx = 0; int right_idx = lps_len - 1;
+    int rowIdx = 0;
+    int colIdx = (int)size - 1;
+    int leftIdx = 0;
+    int rightIdx = lpsLen - 1;
 
-    //Cell trackers
-    int N = dp[I][J - 1]; 
-    int M = dp[I + 1][J]; 
-    int INNER = dp[I + 1][J - 1];
-
-    //backtracking the footprints backward
-    while(I <= J){
-        if(Str[I] == Str[J]){
-            //Footprint 1: the characters matched! They belong in our palindrome.
-            //placing them in current outer edges of result string
-            lps_str[left_idx] = Str[I];
-            lps_str[right_idx] = Str[J];
-
-            //Move inward on both matrix and result string
-            left_idx++;
-            right_idx--;
-            I++;
-            J--;
-        }
-        else if(N > M){
-            //Footprint 2: The max value came from the left. Move left.
-            J--;
-        }
-        else{
-            //Footprint 3: The max value came from the right. Move Down
-            I++;
+    while (rowIdx <= colIdx) {
+        if (str[rowIdx] == str[colIdx]) {
+            lpsStr[leftIdx] = str[rowIdx];
+            lpsStr[rightIdx] = str[colIdx];
+            leftIdx++;
+            rightIdx--;
+            rowIdx++;
+            colIdx--;
+        } else {
+            int valLeft = (colIdx > 0) ? dp[rowIdx][colIdx - 1] : 0;
+            int valDown = (rowIdx + 1 < (int)size) ? dp[rowIdx + 1][colIdx] : 0;
+            if (valLeft > valDown) {
+                colIdx--;
+            } else {
+                rowIdx++;
+            }
         }
     }
-    std::cout << "LPS String is: " << lps_str << "\n" << std::endl;
+
+    std::cout << "LPS String: " << lpsStr << "\n" << std::endl;
 }

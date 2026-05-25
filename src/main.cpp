@@ -1,3 +1,8 @@
+/*
+ * Actividad Integradora 1: pattern scanning, palindrome analysis, and substring similarity.
+ * Autores: Leonel Bailón A01286177, Silvanna Farias A01178494, Angel Sánchez A00837790
+ * Fecha: 2026-05-24
+ */
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -8,8 +13,11 @@
 #include "../include/Scanner.h"
 #include "../include/Similarity.h"
 
-const std::vector<std::string> files = {"transmission1.txt", "transmission2.txt", "mcode1.txt", "mcode2.txt", "mcode3.txt"};
+const std::vector<std::string> FILES = {"transmission1.txt", "transmission2.txt", "mcode1.txt", "mcode2.txt", "mcode3.txt"};
 
+// Returns the data directory path for a given test case number.
+// Param user: case number (1-4).
+// Returns: relative path string, or empty string if out of range.
 std::string getPath(int user) {
     switch (user) {
         case 1:
@@ -25,6 +33,9 @@ std::string getPath(int user) {
     }
 }
 
+// Strips carriage return and newline characters from a string.
+// Param input: raw file content string.
+// Returns: cleaned string with no \r or \n characters.
 std::string normalizeContent(const std::string& input) {
     std::string output;
     output.reserve(input.size());
@@ -37,21 +48,21 @@ std::string normalizeContent(const std::string& input) {
 }
 
 int main() {
-    int user;
+    int user = 0;
     std::cout << "select the case: (1/2/3/4)" << "\n" << std::endl;
     std::cin >> user;
     std::string dir = getPath(user);
 
-    LPS Len_Matrix;
+    LPS lenMatrix;
     std::string transmission1;
     std::string transmission2;
     std::string mcode1;
     std::string mcode2;
     std::string mcode3;
 
-    for (const std::string& filename : files) {
-        std::string fullpath = dir + filename;
-        std::ifstream fileStream(fullpath);
+    for (const std::string& filename : FILES) {
+        std::string fullPath = dir + filename;
+        std::ifstream fileStream(fullPath);
 
         if (!fileStream.is_open()) {
             std::cout << "The file " << filename << " didn't open" << std::endl;
@@ -67,11 +78,6 @@ int main() {
             continue;
         }
 
-        std::size_t size = Len_Matrix.Length(content);
-        std::cout << "Processing file: " << filename << std::endl;
-        std::cout << "Content size: " << size << std::endl;
-        Len_Matrix.LIS(size, content);
-
         if (filename == "transmission1.txt") {
             transmission1 = content;
         } else if (filename == "transmission2.txt") {
@@ -83,9 +89,6 @@ int main() {
         } else if (filename == "mcode3.txt") {
             mcode3 = content;
         }
-
-        std::cout << "------- end of file: " << filename << " ------" << std::endl;
-        std::cout << std::endl;
     }
 
     std::vector<std::pair<std::string, std::string>> scanTargets = {
@@ -112,6 +115,17 @@ int main() {
     }
     std::cout << std::endl;
 
+    std::cout << "===== Palindrome Results =====" << std::endl;
+    if (!transmission1.empty()) {
+        std::cout << "transmission1:" << std::endl;
+        lenMatrix.findLps(lenMatrix.length(transmission1), transmission1);
+    }
+    if (!transmission2.empty()) {
+        std::cout << "transmission2:" << std::endl;
+        lenMatrix.findLps(lenMatrix.length(transmission2), transmission2);
+    }
+
+    std::cout << "===== Similarity Results =====" << std::endl;
     if (!transmission1.empty() && !transmission2.empty()) {
         auto result = longestCommonSubstring(transmission1, transmission2);
         if (result.second > 0) {

@@ -1,7 +1,16 @@
+/*
+ * Implementation of Longest Common Substring using DP.
+ * Autores: [Nombre Apellido] - [Matricula]
+ * Fecha: 2026-05-24
+ */
 #include <vector>
 #include <string>
 #include "../include/Similarity.h"
 
+// Finds the longest contiguous substring shared by t1 and t2 using DP O(n*m).
+// Param t1: first transmission string.
+// Param t2: second transmission string.
+// Returns: {1-based start position in t1, length} or {0, 0} if none found.
 std::pair<int, int> longestCommonSubstring(const std::string& t1, const std::string& t2) {
     const size_t n = t1.size();
     const size_t m = t2.size();
